@@ -1,5 +1,11 @@
-from os import listdir, path
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+@teacher: yoann dufresne
+@students: camillo and izard
+"""
 
+from os import listdir, path
 
 def load_fna(filename):
     """ Loads a fasta formated file into a list of sequences.
@@ -31,7 +37,13 @@ def load_directory(directory):
     """
     files = {}
     for filename in listdir(directory):
-        if filename[filename.rfind('.')+1:] in ["fa", "fasta", "fna"]:
+
+        # We changed filename[filename.rfind('.')+1:] by filename.split('.')[-1]
+        # to avoid problems with files like "fi.le.fna" because if there is 
+        # several dots in the filename, the previous code would only consider
+        # the part after the first dot, which is not what we want.
+
+        if filename.split('.')[-1] in ["fa", "fasta", "fna"]:
             files[filename] = load_fna(path.join(directory, filename))
     
     return files
